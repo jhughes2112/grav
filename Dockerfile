@@ -23,6 +23,5 @@ RUN chmod a+rx /startup.sh && \
 	chown -R nobody:nobody /var/www/grav-admin && \
 	chown -R nobody:nobody /var/www/html
 
-# Having trouble with permissions and NFS mounts.  Seems it really wants root.
-# USER nobody
+USER nobody
 ENTRYPOINT [ "/startup.sh" ]
