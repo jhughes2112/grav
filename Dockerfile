@@ -5,7 +5,7 @@ USER root
 # Adds zip (Grav needs it) then grab Grav and install it
 # This always installs the latest version of Grav
 # Then, configures nginx with grav's conf file, actually linking directly to the version in webserver-configs in the backed-up folder, for easy tweaking.
-RUN apk --no-cache add php7-zip && \
+RUN apk --no-cache add php7-zip php7-simplexml && \
 	wget https://getgrav.org/download/core/grav-admin/latest -O grav-admin.zip && \
 	mkdir /var/www/grav-admin && \
 	mkdir /var/www/html/webserver-configs && \
