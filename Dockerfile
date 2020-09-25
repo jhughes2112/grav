@@ -13,7 +13,7 @@ RUN apk --no-cache add php7-zip && \
     rm grav-admin.zip && \
     cd /var/www/grav-admin && \
     bin/gpm install -f -y admin && \
-    ln -s /var/www/html/webserver-configs/nginx.conf /etc/nginx/conf.d/grav.conf
+    ln -s /var/www/html/webserver-configs/grav.conf /etc/nginx/conf.d/grav.conf
 
 ADD grav.conf /var/www/grav-admin/webserver-configs/grav.conf
 ADD grav.conf /var/www/html/webserver-configs/grav.conf
