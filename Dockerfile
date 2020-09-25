@@ -18,6 +18,7 @@ RUN apk --no-cache add php7-zip && \
 ADD grav.conf /var/www/grav-admin/webserver-configs/grav.conf
 ADD grav.conf /var/www/html/webserver-configs/grav.conf
 ADD startup.sh /startup.sh
+RUN chmod a+rx /startup.sh && chown nobody:nobody /startup.sh
 
 USER nobody
 ENTRYPOINT [ "/startup.sh" ]

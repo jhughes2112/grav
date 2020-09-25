@@ -6,12 +6,15 @@ For more info on Grav, visit the [Grav Website](https://getgrav.org/).
 
 ## Usage
 
+I set the startup script so that it automatically copies the Grav installation to /var/www/html if it isn't already present.  That way, you can mount an empty volume there and it'll basically configure itself.
+Also, /var/www/html/webserver-configs/grav.conf is the Nginx configuration file that is used to host the site.  Since you can't restart Nginx inside a docker container, if you want to tweak the config, just edit the file and restart the container (assuming you have a volume mounted there to retain file changes).
+
 ### Docker
 
 The simplest way to run this image with docker alone is:
 
 ```
-docker run -d -p 80:80 -v /your/local/folder:/var/www/html jhughes2112/grav-nginx
+docker run -d -p 80:80 -v /your/local/folder:/var/www/html jhughes2112/grav-nginx-alpine
 ```
 
 This will run grav, and prompt for admin user setup on startup.  Grav will be available on [http://localhost/](http://localhost/)
@@ -24,11 +27,10 @@ To simplify further, the site can be started using the following docker compose:
 version: '2'
 services:
   site:
-    image: jhughes2112/grav-nginx
+    image: jhughes2112/grav-nginx-alpine
     restart: always
     ports:
       - "80:80"
-      - "443:443"
     volumes:
       - backup:/var/www/html/
 volumes:
@@ -43,11 +45,8 @@ docker-compose up -d
 ```
 
 This will do the following:
-* Open ports 80 and 443 for http(s) access
-* Configure the admin user
+* Open port 80 for http access
 * Create a volume named `backup` with the grav user data mounted into it
-* Generate trusted certificates for 'example.com' using Let's Encrypt
-* Configure Nginx with SSL
 
 
 ## Backing up
