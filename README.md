@@ -1,6 +1,7 @@
-This is a simple Docker image running Grav CMS with the admin plugin under Alpine/Nginx/PHP7.
+This is a very lightweight, simple Docker image running Grav CMS with the admin plugin under Alpine/Nginx/PHP7.
 
-Although this was branched from evns/grav, I have removed the ACME Lets Encrypt parts, the environment variables that configure the admin user, and indeed the entire startup script.  It had bugs and I don't want ACME stuff cluttering up my Grav container (using Kubernetes, there are better ways).
+Although this was branched from evns/grav, there's nothing really remaining of those features.  I have removed the ACME Lets Encrypt parts, the environment variables that configure the admin user, and indeed the entire startup script.  It had bugs and I don't want ACME stuff cluttering up my Grav container (using Kubernetes, there are better ways).
+The server does not run as "root", instead it runs as "nobody".  That also means it cannot bind to port 80, so all traffic comes into the container on port 8000.
 
 For more info on Grav, visit the [Grav Website](https://getgrav.org/).
 
@@ -14,7 +15,7 @@ Also, /var/www/html/webserver-configs/grav.conf is the Nginx configuration file 
 The simplest way to run this image with docker alone is:
 
 ```
-docker run -d -p 80:80 -v /your/local/folder:/var/www/html jhughes2112/grav-nginx-alpine
+docker run -d -p 80:8000 -v /your/local/folder:/var/www/html jhughes2112/grav-nginx-alpine
 ```
 
 This will run grav, and prompt for admin user setup on startup.  Grav will be available on [http://localhost/](http://localhost/)
@@ -30,7 +31,7 @@ services:
     image: jhughes2112/grav-nginx-alpine
     restart: always
     ports:
-      - "80:80"
+      - "80:8000"
     volumes:
       - backup:/var/www/html/
 volumes:
