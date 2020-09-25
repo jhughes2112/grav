@@ -1,6 +1,5 @@
 #!/bin/sh
 
-set -x
 set -e
 
 # copy the grav install folder to the html folder if missing.  Helps with new setups.
